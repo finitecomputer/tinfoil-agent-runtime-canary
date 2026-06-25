@@ -5,12 +5,12 @@ memory: 16384
 
 containers:
   - name: "finite-agent-runtime"
-    image: "ghcr.io/finitecomputer/fc-tinfoil-agent-runtime:tinfoil-finitechat-canary-2026-06-25.5@sha256:c919d8fc64d9aaa569332a259ff517b2f37a55feacb99addc02b7c0f85e10e47"
+    image: "ghcr.io/finitecomputer/fc-tinfoil-agent-runtime:tinfoil-finitechat-canary-2026-06-25.9@sha256:58924c7c9bdea96c5b7984c72977c5930a62eff312385937356d0c2ccc0ccc80"
     restart: on-failure
     env:
-      - TINFOIL_CANARY_RUNTIME_ID: "tinfoil-canary-user-2026-06-25"
+      - TINFOIL_CANARY_RUNTIME_ID: "tinfoil-canary-user-2026-06-25-3"
       - TINFOIL_CANARY_STATE_BUCKET: "tinfoil-agent-spike"
-      - TINFOIL_CANARY_STATE_PREFIX: "agent-runtimes/tinfoil-canary-user-2026-06-25"
+      - TINFOIL_CANARY_STATE_PREFIX: "agent-runtimes/tinfoil-canary-user-2026-06-25-3"
       - TINFOIL_CANARY_S3_ENDPOINT: "https://objects.nyc.storage.sh"
       - AWS_DEFAULT_REGION: "auto"
       - FINITE_RUNTIME_STATUS_PORT: "8080"
