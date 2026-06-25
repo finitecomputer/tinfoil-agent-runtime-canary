@@ -8,9 +8,9 @@ containers:
     image: "ghcr.io/finitecomputer/fc-tinfoil-agent-runtime:tinfoil-finitechat-canary-2026-06-25.5@sha256:c919d8fc64d9aaa569332a259ff517b2f37a55feacb99addc02b7c0f85e10e47"
     restart: on-failure
     env:
-      - TINFOIL_CANARY_RUNTIME_ID: "tinfoil-canary-001"
+      - TINFOIL_CANARY_RUNTIME_ID: "tinfoil-canary-user-2026-06-25"
       - TINFOIL_CANARY_STATE_BUCKET: "tinfoil-agent-spike"
-      - TINFOIL_CANARY_STATE_PREFIX: "agent-runtimes/tinfoil-canary-001"
+      - TINFOIL_CANARY_STATE_PREFIX: "agent-runtimes/tinfoil-canary-user-2026-06-25"
       - TINFOIL_CANARY_S3_ENDPOINT: "https://objects.nyc.storage.sh"
       - AWS_DEFAULT_REGION: "auto"
       - FINITE_RUNTIME_STATUS_PORT: "8080"
