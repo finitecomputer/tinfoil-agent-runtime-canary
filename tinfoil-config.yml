@@ -1,0 +1,38 @@
+# Public measured config for the Finite Tinfoil agent runtime canary.
+cvm-version: 0.7.5
+cpus: 4
+memory: 16384
+
+containers:
+  - name: "finite-agent-runtime"
+    image: "ghcr.io/finitecomputer/fc-tinfoil-agent-runtime:tinfoil-finitechat-canary-2026-06-25.2@sha256:0583b370415a56e0abbfebb935ec56809dd2ee1f7eeec36bdf03a98a0e051c39"
+    restart: on-failure
+    env:
+      - TINFOIL_CANARY_RUNTIME_ID: "tinfoil-canary-001"
+      - TINFOIL_CANARY_STATE_BUCKET: "tinfoil-agent-spike"
+      - TINFOIL_CANARY_STATE_PREFIX: "agent-runtimes/tinfoil-canary-001"
+      - TINFOIL_CANARY_S3_ENDPOINT: "https://objects.nyc.storage.sh"
+      - AWS_DEFAULT_REGION: "auto"
+      - FINITE_RUNTIME_STATUS_PORT: "8080"
+      - FINITECHAT_SERVER_URL: "https://chat.finite.computer"
+      - FINITECHAT_INVITE_REFRESH_SECS: "20"
+      - FINITE_SITES_API: "https://api.finite.chat"
+    secrets:
+      - AWS_ACCESS_KEY_ID
+      - AWS_SECRET_ACCESS_KEY
+      - RESTIC_PASSWORD
+      - OPENROUTER_API_KEY
+      - FINITE_RUNTIME_STATUS_TOKEN
+    healthcheck:
+      test: ["CMD", "curl", "-sf", "http://localhost:8080/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 10m
+
+shim:
+  upstream-port: 8080
+  paths:
+    - /health
+    - /status
+    - /finitechat-invite
