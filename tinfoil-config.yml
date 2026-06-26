@@ -5,7 +5,7 @@ memory: 16384
 
 containers:
   - name: "finite-agent-runtime"
-    image: "ghcr.io/finitecomputer/fc-tinfoil-agent-runtime:tinfoil-canary-2026-06-26-669797f@sha256:7906569080986e942a742f069066820f3560d0720de1e8381f0bb183a3d56f25"
+    image: "ghcr.io/finitecomputer/fc-tinfoil-agent-runtime:tinfoil-canary-2026-06-26-3319c71@sha256:888f17d06ec28a20ec886a712b104667e50bcf2d98421fb8815c2dfe79098c03"
     restart: on-failure
     env:
       - TINFOIL_CANARY_RUNTIME_ID: "tinfoil-canary-user-2026-06-26-sidecar-1"
@@ -16,6 +16,7 @@ containers:
       - FINITE_RUNTIME_STATUS_PORT: "8080"
       - FINITECHAT_SERVER_URL: "https://chat.finite.computer"
       - FINITECHAT_INVITE_REFRESH_SECS: "20"
+      - FINITECHAT_INVITE_REFRESH_ON_REQUEST: "true"
       - FINITECHAT_HERMES_SERVICE_ADDR: "127.0.0.1:18789"
       - FINITECHAT_HERMES_SERVICE_URL: "http://127.0.0.1:18789"
       - FINITE_SITES_API: "https://api.finite.chat"

@@ -17,3 +17,6 @@ Wait for both release workflows to complete before deploying with the Tinfoil CL
 - `/health`: public healthcheck.
 - `/status`: public non-secret status and agent `npub` when available.
 - `/finitechat-invite`: requires `Authorization: Bearer $FINITE_RUNTIME_STATUS_TOKEN`.
+  Returns the stable Finite Chat invite URL/code plus the current challenge PIN.
+  Repeating the request after the PIN window advances should keep the invite URL
+  stable and return a new PIN.
