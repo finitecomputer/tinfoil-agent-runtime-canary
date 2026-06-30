@@ -9,7 +9,7 @@ releases for deployment.
 ## Release
 
 ```bash
-gh workflow run tinfoil-release.yml -f version=v0.1.15
+gh workflow run tinfoil-release.yml -f version=v0.1.16
 ```
 
 Wait for both release workflows to complete before deploying with the Tinfoil CLI.
