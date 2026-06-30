@@ -10,19 +10,10 @@ containers:
       - FINITECHAT_SERVER_URL: "https://chat.finite.computer"
       - FINITECHAT_HOME: "/data/agent"
       - FINITE_AGENT_HTTP_PORT: "8080"
-      - FINITE_AGENT_RESTORE_ON_START: "1"
-      - FINITE_AGENT_RESTORE_LATEST: "1"
-      - FINITE_AGENT_BACKUP_ON_EXIT: "1"
-      - FINITE_AGENT_BACKUP_INTERVAL_SECS: "30"
-      - FINITE_AGENT_RESTIC_REPOSITORY: "s3:https://objects.nyc.storage.sh/tinfoil-agent-spike/agent-runtimes/tinfoil-canary-003/product/restic"
-      - FINITE_AGENT_RESTIC_BACKUP_TAG: "finite-agent-state"
       - FINITECHAT_HERMES_INBOUND_STREAM: "1"
       - FINITECHAT_HERMES_MODEL: "anthropic/claude-sonnet-4.6"
       - FINITECHAT_HERMES_PROVIDER: "openrouter"
     secrets:
-      - FINITE_AGENT_RESTIC_PASSWORD
-      - AWS_ACCESS_KEY_ID
-      - AWS_SECRET_ACCESS_KEY
       - OPENROUTER_API_KEY
     healthcheck:
       test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8080/healthz', timeout=5).read()"]
