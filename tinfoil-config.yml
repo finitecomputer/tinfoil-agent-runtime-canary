@@ -4,7 +4,7 @@ memory: 16384
 
 containers:
   - name: "finite-agent-tinfoil-user-canary"
-    image: "ghcr.io/finitecomputer/finite-chat-hermes-runtime@sha256:ba2e11a8dc6728aa671b12bcc4f10367703ededac1eadfa954094e003c3460d9"
+    image: "ghcr.io/finitecomputer/finite-chat-hermes-runtime@sha256:e9c8e1d2827b97f6732d6c15e448678eefebfe56fab5088c6fd4d71f51b0512f"
     env:
       - FINITE_SERVER_URL: "https://chat.finite.computer"
       - FINITECHAT_SERVER_URL: "https://chat.finite.computer"
@@ -13,7 +13,8 @@ containers:
       - FINITE_AGENT_RESTORE_ON_START: "1"
       - FINITE_AGENT_RESTORE_LATEST: "1"
       - FINITE_AGENT_BACKUP_ON_EXIT: "1"
-      - FINITE_AGENT_RESTIC_REPOSITORY: "s3:https://objects.nyc.storage.sh/tinfoil-agent-spike/agent-runtimes/tinfoil-canary-002/restic"
+      - FINITE_AGENT_BACKUP_INTERVAL_SECS: "30"
+      - FINITE_AGENT_RESTIC_REPOSITORY: "s3:https://objects.nyc.storage.sh/tinfoil-agent-spike/agent-runtimes/tinfoil-canary-003/product/restic"
       - FINITE_AGENT_RESTIC_BACKUP_TAG: "finite-agent-state"
       - FINITECHAT_HERMES_INBOUND_STREAM: "1"
       - FINITECHAT_HERMES_MODEL: "anthropic/claude-sonnet-4.6"
