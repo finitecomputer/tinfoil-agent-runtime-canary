@@ -1,40 +1,37 @@
-# Public measured config for the Finite Tinfoil agent runtime canary.
-cvm-version: 0.7.5
+cvm-version: "0.7.5"
 cpus: 4
 memory: 16384
 
 containers:
-  - name: "finite-agent-runtime"
-    image: "ghcr.io/finitecomputer/fc-tinfoil-agent-runtime:tinfoil-finitechat-canary-2026-06-25.18@sha256:81640dbe0e187cbe4bad5f25759465b7971dfdd4cc274dd118fe3a32547ab3eb"
-    restart: on-failure
+  - name: "finite-agent-tinfoil-user-canary"
+    image: "ghcr.io/finitecomputer/finite-chat-hermes-runtime@sha256:ba2e11a8dc6728aa671b12bcc4f10367703ededac1eadfa954094e003c3460d9"
     env:
-      - TINFOIL_CANARY_RUNTIME_ID: "tinfoil-canary-user-2026-06-25-8"
-      - TINFOIL_CANARY_STATE_BUCKET: "tinfoil-agent-spike"
-      - TINFOIL_CANARY_STATE_PREFIX: "agent-runtimes/tinfoil-canary-user-2026-06-25-8"
-      - TINFOIL_CANARY_S3_ENDPOINT: "https://objects.nyc.storage.sh"
-      - AWS_DEFAULT_REGION: "auto"
-      - FINITE_RUNTIME_STATUS_PORT: "8080"
-      - FINITECHAT_SERVER_URL: "https://chat.finite.computer"
-      - FINITECHAT_INVITE_REFRESH_SECS: "20"
-      - FINITECHAT_POLL_INTERVAL_SECS: "2"
-      - FINITECHAT_POLL_TIMEOUT_MILLIS: "15000"
-      - FINITE_SITES_API: "https://api.finite.chat"
+      - FINITE_SERVER_URL: "https://chat.finite.computer"
+      - FINITECHAT_HOME: "/data/agent"
+      - FINITE_AGENT_HTTP_PORT: "8080"
+      - FINITE_AGENT_RESTORE_ON_START: "1"
+      - FINITE_AGENT_RESTORE_LATEST: "1"
+      - FINITE_AGENT_BACKUP_ON_EXIT: "1"
+      - FINITE_AGENT_RESTIC_REPOSITORY: "s3:https://objects.nyc.storage.sh/tinfoil-agent-spike/agent-runtimes/tinfoil-canary-001/restic"
+      - FINITE_AGENT_RESTIC_BACKUP_TAG: "finite-agent-state"
+      - FINITECHAT_HERMES_INBOUND_STREAM: "1"
+      - FINITECHAT_HERMES_MODEL: "anthropic/claude-sonnet-4.6"
+      - FINITECHAT_HERMES_PROVIDER: "openrouter"
     secrets:
+      - FINITE_AGENT_RESTIC_PASSWORD
       - AWS_ACCESS_KEY_ID
       - AWS_SECRET_ACCESS_KEY
-      - RESTIC_PASSWORD
       - OPENROUTER_API_KEY
-      - FINITE_RUNTIME_STATUS_TOKEN
     healthcheck:
-      test: ["CMD", "curl", "-sf", "http://localhost:8080/health"]
-      interval: 10s
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8080/healthz', timeout=5).read()"]
+      interval: 30s
       timeout: 5s
-      retries: 12
-      start_period: 10m
+      start_period: 5m
+      retries: 10
+    restart: always
 
 shim:
   upstream-port: 8080
   paths:
-    - /health
-    - /status
-    - /finitechat-invite
+    - /healthz
+    - /invite
